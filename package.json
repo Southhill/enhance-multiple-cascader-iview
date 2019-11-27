@@ -1,14 +1,13 @@
 {
   "name": "enhance-mul-cascader",
   "version": "1.0.0",
-  "description": "enhance multiple cascader",
+  "description": "enhance multiple cascader base on iview",
   "main": "dist/multi-cascader.js",
   "scripts": {
-    "test": "karma start",
     "dev": "webpack-dev-server --open-page dist/index.html --inline --config build/webpack.dev.config.js",
     "build": "webpack --config build/webpack.prod.config.js"
   },
-  "author": "",
+  "author": "Cao",
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.4.2",
