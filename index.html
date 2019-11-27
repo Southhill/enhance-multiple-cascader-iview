@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>test enhance multiple cascader</title>
+    <meta charset="utf-8">
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.common.dev.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://unpkg.com/iview@3.5.1/dist/styles/iview.css">
+    <script src="https://cdn.bootcss.com/iview/3.5.1/iview.js"></script>
+    <script src="./dist/multi-cascader.js" type="text/javascript"></script>
+    <style>
+        #multiple-cascader {
+            max-width: 300px;
+            margin: 30px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="multiple-cascader">
+        <enhance-multi-cascader :value="value" :data="data" transfer @on-change="handleChange" />
+    </div>
+    <script>
+        const $el = document.querySelector('#multiple-cascader')
+
+        new Vue({
+            el: $el,
+            data: {
+                value: ['jiangsu', 'suzhou', 'zhuozhengyuan'],
+                data: [{
+                    value: 'beijing',
+                    label: '北京',
+                    children: [{
+                            value: 'gugong',
+                            label: '故宫'
+                        },
+                        {
+                            value: 'tiantan',
+                            label: '天坛'
+                        },
+                        {
+                            value: 'wangfujing',
+                            label: '王府井'
+                        }
+                    ]
+                }, {
+                    value: 'jiangsu',
+                    label: '江苏',
+                    children: [{
+                            value: 'nanjing',
+                            label: '南京',
+                            children: [{
+                                value: 'fuzimiao',
+                                label: '夫子庙',
+                            }]
+                        },
+                        {
+                            value: 'suzhou',
+                            label: '苏州',
+                            children: [{
+                                    value: 'zhuozhengyuan',
+                                    label: '拙政园',
+                                },
+                                {
+                                    value: 'shizilin',
+                                    label: '狮子林',
+                                }
+                            ]
+                        }
+                    ],
+                }]
+            },
+            methods: {
+                handleChange(result) {
+                    console.log('result:', result)
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
