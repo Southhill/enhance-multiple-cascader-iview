@@ -2,13 +2,19 @@
   "name": "enhance-multiple-cascader",
   "version": "1.0.1",
   "description": "enhance multiple cascader base on iview",
-  "main": "dist/multi-cascader.js",
+  "main": "dist/enhance-multiple-cascader.js",
   "scripts": {
     "dev": "webpack-dev-server --open-page dist/index.html --inline --config build/webpack.dev.config.js",
     "build": "webpack --config build/webpack.prod.config.js"
   },
   "author": "Cao",
   "license": "MIT",
+  "keywords": [
+    "vue",
+    "iview",
+    "multiple-cascader",
+    "enhance-form-component"
+  ],
   "dependencies": {
     "iview": "^3.5.3",
     "vue": "^2.5.9"
@@ -22,7 +28,6 @@
     "axios": "^0.18.1",
     "babel-loader": "^8.0.0",
     "babel-plugin-syntax-async-functions": "^6.13.0",
-    "copy-webpack-plugin": "^4.3.1",
     "css-loader": "^0.28.7",
     "file-loader": "^1.1.5",
     "html-webpack-plugin": "^2.30.1",
@@ -34,6 +39,7 @@
     "karma-webpack": "^3.0.5",
     "less": "^3.10.3",
     "less-loader": "^4.0.5",
+    "snazzy": "^8.0.0",
     "standard": "^14.3.1",
     "style-loader": "^0.19.0",
     "uglifyjs-webpack-plugin": "^1.1.6",

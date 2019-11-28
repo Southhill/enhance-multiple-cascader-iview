@@ -1,19 +1,18 @@
-const wpBaseConfig = require('./webpack.base.config');
-const merge = require('webpack-merge');
-const path = require('path');
+const merge = require("webpack-merge");
+
+const wpBaseConfig = require("./webpack.base.config");
 
 module.exports = merge(wpBaseConfig, {
-  devtool: '#source-map',
+  devtool: "#source-map",
   devServer: {
-    publicPath: '/dist/',
+    publicPath: "/dist/",
     // contentBase: path.join(__dirname, 'dist'),
     port: 9000
   },
   output: {
-    path: '/dist/',
-    filename: 'multi-cascader.js',
-    library: 'multiCascader',
-    libraryTarget: 'umd',
-  },
-})
-
+    path: "/dist/",
+    filename: "enhance-multiple-cascader.js.js",
+    library: "enhance-multiple-cascader",
+    libraryTarget: "umd"
+  }
+});
