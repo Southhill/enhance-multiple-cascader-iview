@@ -9,8 +9,13 @@ enhance multiple cascader base on iview
 ### import
 ```bash
 # install module
-npm i southhill/enhance-multiple-cascader -S
+npm i southhill/enhance-multiple-cascader-iview -S
 ```
+依赖引入
+
+    使用script标签引入vue.js，iview.js。
+    使用link标签引入iview.css。
+
 ```javascript
 import EnhanceMultipleCascader from 'enhance-multiple-cascader'
 
