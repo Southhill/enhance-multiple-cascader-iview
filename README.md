@@ -6,6 +6,16 @@ enhance multiple cascader base on iview
 
 ## usage
 
+### import
+```bash
+# install module
+npm i southhill/enhance-multiple-cascader -S
+```
+```javascript
+import EnhanceMultipleCascader from 'enhance-multiple-cascader'
+
+Vue.use(EnhanceMultipleCascader)
+```
 ### props explain
 
 | prop                    | type     | default                                                                                     | explain                                                                                                                                                    |
