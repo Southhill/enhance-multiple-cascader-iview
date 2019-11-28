@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack-dev-server --open-page dist/index.html --inline --config build/webpack.dev.config.js",
     "build": "webpack --config build/webpack.prod.config.js",
-    "lint": "standard --fix && git add"
+    "lint": "standard --fix && git add ."
   },
   "author": "Cao",
   "license": "MIT",
@@ -18,7 +18,7 @@
   ],
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint"
+      "pre-commit": "standard --fix && git add"
     }
   },
   "dependencies": {
