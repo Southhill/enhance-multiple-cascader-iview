@@ -5,6 +5,7 @@
         v-for="(item, idx) of data"
         :key="idx"
         :item="item"
+        :values="values"
         :multiple="multiple"
         :disabled="disabled"
         :only-leaf="onlyLeaf"
@@ -17,6 +18,7 @@
     <CascaderPanel
       v-if="hasSubList"
       :data="subList"
+      :values="values"
       :trigger="trigger"
       :disabled="disabled"
       :multiple="multiple"
@@ -36,6 +38,10 @@ export default {
   inject: ['rootProp'],
   props: {
     data: {
+      type: Array,
+      default: () => []
+    },
+    values: {
       type: Array,
       default: () => []
     },

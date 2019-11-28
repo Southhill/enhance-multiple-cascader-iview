@@ -7,16 +7,17 @@
     <input type="hidden" :name="name" :value="publicValue" />
     <CascaderHead
       :filterable="filterable"
+      :visible="visible"
       :multiple="multiple"
       :values="currentValue"
       :clearable="clearable"
-      :allow-delete-by-close-icon="allowDeleteByCloseIcon"
       :disabled="disabled"
       :placeholder="placeholder"
       :max-tag-count="maxTagCount"
       :max-tag-placeholder="maxTagPlaceholder"
       :prop-alias="propAlias"
-      :visible="visible"
+      :head-style="headStyle"
+      :allow-delete-by-close-icon="allowDeleteByCloseIcon"
       @click.native.stop="() => switchDropdown(true)"
       @on-query-change="handleQuery"
       @on-input-focus="isFocused = true"
@@ -30,6 +31,7 @@
           <CascaderPanel
             ref="panel"
             :data="currentData"
+            :values="currentValue"
             :disabled="disabled"
             :trigger="trigger"
             :multiple="multiple"
@@ -41,10 +43,13 @@
       </Dropdown>
     </transition>
   </div>
-  <span v-else>被禁用的级联组件</span>
+  <span v-else class="enhance-mul-cascader">{{ displayValue }}</span>
 </template>
 
 <script>
+const isObject = obj =>
+  Object.prototype.toString.call(obj).slice(8, -1) === 'Object'
+
 import { directive as clickOutside } from 'v-click-outside-x'
 import { Dropdown } from 'iview'
 
@@ -143,7 +148,9 @@ export default {
     },
     labelInValue: {
       type: Boolean,
-      default: false
+      default: false,
+      __description:
+        '触发on-change事件时，返回的参数是否要被包装为传入的对象形式'
     },
     multiple: {
       type: Boolean,
@@ -167,6 +174,12 @@ export default {
     name: {
       type: String,
       default: 'cascader'
+    },
+    headStyle: {
+      type: Object,
+      default: () => ({}),
+      __description:
+        '控制级联框的行内样式，多用来控制级联框宽度，默认宽度为240px'
     }
   },
   data() {
@@ -192,7 +205,6 @@ export default {
     },
     rootProp() {
       return {
-        currentValue: this.currentValue,
         setCurrentValue: this.setCurrentValue
       }
     },
@@ -209,6 +221,15 @@ export default {
     },
     publicValue() {
       return this.currentValue.map(item => item[this.labelProp])
+    },
+    displayValue() {
+      const isLabelInValue = this.value.every(item => isObject(item))
+
+      const labelList = isLabelInValue
+        ? this.value.map(item => item[this.labelProp])
+        : this.publicValue
+
+      return labelList.join('，')
     }
   },
   watch: {
@@ -232,11 +253,12 @@ export default {
       }
     },
     currentValue(newVal) {
-      const result = this.currentValue.map(item => {
-        return this.labelInValue ? item : item[this.valueProp]
-      })
+      const valueList = this.currentValue.map(item => item[this.valueProp])
+      const itemList = this.currentValue.map(item => item)
 
-      this.$emit('on-change', result)
+      // 对value属性做双向绑定处理
+      this.$emit('update:value', valueList)
+      this.$emit('on-change', this.labelInValue ? itemList : valueList)
     }
   },
   methods: {
@@ -250,7 +272,6 @@ export default {
       }
     },
     switchDropdown(status) {
-      console.log('click 2')
       this.visible = status
     },
     clearSingleSelect() {
@@ -317,6 +338,7 @@ export default {
 .enhance-mul-cascader {
   display: inline-block;
   width: max-content;
+  min-width: 240px;
   position: relative;
   .ivu-dropdown {
     display: block;

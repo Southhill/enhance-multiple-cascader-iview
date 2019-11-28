@@ -24,6 +24,10 @@ export default {
       type: Object,
       default: () => ({})
     },
+    values: {
+      type: Array,
+      default: () => []
+    },
     multiple: {
       type: Boolean,
       default: true
@@ -87,7 +91,7 @@ export default {
     },
     isChecked() {
       return (
-        this.rootProp.currentValue.findIndex(
+        this.values.findIndex(
           item => this.item[this.valueProp] === item[this.valueProp]
         ) > -1
       )
@@ -113,14 +117,14 @@ export default {
 
       const isAllChecked = this.flatItem.every(item => {
         return (
-          this.rootProp.currentValue.findIndex(
+          this.values.findIndex(
             value => value[this.valueProp] === item[this.valueProp]
           ) > -1
         )
       })
       const isNotAllChecked = this.flatItem.every(item => {
         return (
-          this.rootProp.currentValue.findIndex(
+          this.values.findIndex(
             value => value[this.valueProp] === item[this.valueProp]
           ) === -1
         )

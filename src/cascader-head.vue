@@ -1,5 +1,5 @@
 <template>
-  <div class="enhance-mul-cascader-head">
+  <div class="enhance-mul-cascader-head" :style="headStyle">
     <template v-if="multiple">
       <template v-for="(tag, idx) of values">
         <Tag
@@ -18,6 +18,9 @@
         @click.native.stop="displayAllTag"
         >{{ maxTagPlaceholder(values.length - maxTagCount) }}</span
       >
+      <span v-if="!values.length" class="head-placeholder">{{
+        placeholder
+      }}</span>
     </template>
     <template v-else>
       <span class="single-display-value">{{ selectedSingle }}</span>
@@ -92,6 +95,10 @@ export default {
       type: Array,
       default: () => []
     },
+    placeholder: {
+      type: String,
+      default: '请选择'
+    },
     maxTagCount: {
       type: Number,
       default: -1
@@ -110,6 +117,10 @@ export default {
           children: 'children'
         }
       }
+    },
+    headStyle: {
+      type: Object,
+      default: () => ({})
     }
   },
   data() {
@@ -225,7 +236,7 @@ export default {
 <style lang="less" scoped>
 .enhance-mul-cascader-head {
   display: inline-block;
-  max-width: 300px;
+  width: 240px;
   min-height: 36px;
   line-height: 1.5;
   padding: 4px 10px 4px 5px;
@@ -255,6 +266,18 @@ export default {
     border-radius: 15px;
     width: 40px;
     padding: 2px 4px;
+  }
+  .head-placeholder {
+    color: #c5c8ce;
+    display: inline-block;
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-left: 3px;
+    padding-right: 24px;
+    vertical-align: -webkit-baseline-middle;
+    width: 100%;
   }
 }
 </style>
