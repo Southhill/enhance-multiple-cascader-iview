@@ -7,19 +7,30 @@ enhance multiple cascader base on iview
 ## usage
 
 ### import
+1. 在Vue组件中使用：
 ```bash
 # install module
 npm i southhill/enhance-multiple-cascader-iview -S
 ```
-依赖引入
-
-    使用script标签引入vue.js，iview.js。
-    使用link标签引入iview.css。
-
 ```javascript
+// 引入iview组件库，样式
+// 引入iview.css
+import iView from 'iview'
+import 'iview/dist/styles/iview.css'
+
 import EnhanceMultipleCascader from 'enhance-multiple-cascader'
 
+Vue.use(iView)
 Vue.use(EnhanceMultipleCascader)
+```
+2. 在浏览器的html页面直接使用：  
+```html
+<!-- 依赖引入：使用script标签引入vue.js，iview.js。使用link标签引入iview.css。-->
+<script src="https://cdn.bootcss.com/vue/2.6.10/vue.common.dev.js"></script>
+<link rel="stylesheet" type="text/css" href="http://unpkg.com/iview@3.5.1/dist/styles/iview.css">
+<script src="https://cdn.bootcss.com/iview/3.5.1/iview.js"></script>
+
+<script src="./dist/enhance-multiple-cascader.js" type="text/javascript"><script>
 ```
 ### props explain
 
