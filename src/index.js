@@ -1,15 +1,13 @@
-import EnhanceMultipleCascader from './cascader.vue'
+import EnhanceMultipleCascader from "./cascader.vue";
 
-function install (_Vue) {
-  _Vue.component('EnhanceMultipleCascader', EnhanceMultipleCascader)
+function install(_Vue) {
+  _Vue.component("EnhanceMultipleCascader", EnhanceMultipleCascader);
 }
 
-if (typeof window !== 'undefined' && window.Vue) {
-  install(window.Vue)
+if (typeof window !== "undefined" && window.Vue) {
+  install(window.Vue);
 }
 
-const enhanceMultipleCascader = {
-  EnhanceMultipleCascader
-}
+export default { install };
 
-export default Object.assign(enhanceMultipleCascader, { install })
+export { EnhanceMultipleCascader };
