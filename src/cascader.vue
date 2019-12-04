@@ -57,7 +57,7 @@ import CascaderHead from "./cascader-head.vue";
 import CascaderPanel from "./cascader-panel.vue";
 
 export default {
-  name: "EnhanceMultipleCascader",
+  name: "EnhanceCascader",
   cnName: "增强的级联选择组件",
   components: {
     Dropdown,
@@ -236,38 +236,30 @@ export default {
     value: {
       immediate: true,
       handler(newVal) {
-        this.$nextTick(() => {
-          this.currentValue = [];
+        if (!this.flatData.length) return;
 
-          if (!this.flatData.length) return;
-          newVal.forEach(val => {
-            const item = this.flatData.find(
-              item => item[this.valueProp] === val
-            );
+        this.currentValue = [];
+        newVal.forEach(val => {
+          const item = this.flatData.find(item => item[this.valueProp] === val);
 
-            if (item) {
-              this.currentValue.push(item);
-            }
-          });
+          if (item) {
+            this.currentValue.push(item);
+          }
         });
       },
     },
     flatData: {
       immediate: true,
-      handler() {
-        this.$nextTick(() => {
-          this.currentValue = [];
+      handler(newVal) {
+        if (!this.value.length) return;
 
-          if (!this.value.length) return;
-          this.value.forEach(val => {
-            const item = this.flatData.find(
-              item => item[this.valueProp] === val
-            );
+        this.currentValue = [];
+        this.value.forEach(val => {
+          const item = newVal.find(item => item[this.valueProp] === val);
 
-            if (item) {
-              this.currentValue.push(item);
-            }
-          });
+          if (item) {
+            this.currentValue.push(item);
+          }
         });
       },
     },
@@ -278,8 +270,11 @@ export default {
       },
     },
     currentValue(newVal) {
-      const valueList = this.currentValue.map(item => item[this.valueProp]);
-      const itemList = this.currentValue.map(item => item);
+      const valueList = newVal.map(item => item[this.valueProp]);
+      const itemList = newVal.map(item => item);
+
+      // 如果是相同的值，则不触发事件
+      if (this.value.join("") === valueList.join("")) return;
 
       // 对value属性做双向绑定处理
       this.$emit("update:value", valueList);
