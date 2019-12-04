@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack-dev-server --open-page dist/index.html --inline --config build/webpack.dev.config.js",
     "build": "webpack --config build/webpack.prod.config.js",
-    "lint": "standard --verbose | snazzy && standard --fix && git add ."
+    "lint": "standard --verbose | snazzy"
   },
   "author": "Cao",
   "license": "MIT",
