@@ -62,26 +62,26 @@ export default {
   components: {
     Dropdown,
     CascaderHead,
-    CascaderPanel
+    CascaderPanel,
   },
   directives: { clickOutside },
   provide() {
     return {
-      rootProp: this.rootProp
+      rootProp: this.rootProp,
     };
   },
   props: {
     disabled: {
       type: Boolean,
       default: false,
-      __description: "是否被禁用"
+      __description: "是否被禁用",
     },
     value: {
       type: Array,
       default() {
         return [];
       },
-      __description: "双向绑定使用的值"
+      __description: "双向绑定使用的值",
     },
     data: {
       type: Array,
@@ -90,11 +90,11 @@ export default {
           {
             label: "",
             value: "-1",
-            children: []
-          }
+            children: [],
+          },
         ];
       },
-      __description: "待使用的级联数据"
+      __description: "待使用的级联数据",
     },
     propAlias: {
       type: Object,
@@ -103,21 +103,21 @@ export default {
           label: "label",
           value: "value",
           disabled: "disabled",
-          children: "children"
+          children: "children",
         };
       },
       __description:
-        "传递下来的data数据的属性的别名。有可能从服务端获取到的data树的属性名并不能符合当前使用中的属性名，所以做一次映射操作，以避免对服务端数据的处理，方便操作。"
+        "传递下来的data数据的属性的别名。有可能从服务端获取到的data树的属性名并不能符合当前使用中的属性名，所以做一次映射操作，以避免对服务端数据的处理，方便操作。",
     },
     onlyLeaf: {
       type: Boolean,
       default: true,
-      __description: "仅仅只能选择叶子节点"
+      __description: "仅仅只能选择叶子节点",
     },
     allowSelectByParentNode: {
       type: Boolean,
       default: false,
-      __description: "允许通过父节点来选择相应的子节点"
+      __description: "允许通过父节点来选择相应的子节点",
     },
     maxTagCount: {
       type: Number,
@@ -125,37 +125,37 @@ export default {
       validator(value) {
         return Number.isInteger(value) && value >= -1;
       },
-      __description: "当选中多个项目时，是否对显示在输入框中的条目精简显示"
+      __description: "当选中多个项目时，是否对显示在输入框中的条目精简显示",
     },
     maxTagPlaceholder: {
       type: Function,
-      default: v => `+ ${v}...`
+      default: v => `+ ${v}...`,
     },
     filterable: {
       type: Boolean,
       default: false,
-      __description: "是否通过输入过滤级联数据"
+      __description: "是否通过输入过滤级联数据",
     },
     clearable: {
       type: Boolean,
       default: false,
-      __description: "是否可以通过清空输入框的方式删除全部选中的条目"
+      __description: "是否可以通过清空输入框的方式删除全部选中的条目",
     },
     allowDeleteByCloseIcon: {
       type: Boolean,
       default: true,
-      __description: "允许通过Tag的关闭按钮来删除相应选中的条目"
+      __description: "允许通过Tag的关闭按钮来删除相应选中的条目",
     },
     labelInValue: {
       type: Boolean,
       default: false,
       __description:
-        "触发on-change事件时，返回的参数是否要被包装为传入的对象形式"
+        "触发on-change事件时，返回的参数是否要被包装为传入的对象形式",
     },
     multiple: {
       type: Boolean,
       default: true,
-      __description: "默认为多选级联"
+      __description: "默认为多选级联",
     },
     transfer: {
       type: Boolean,
@@ -164,30 +164,30 @@ export default {
           ? false
           : this.$IVIEW.transfer;
       },
-      __description: "下拉组件是否挂载到body元素上"
+      __description: "下拉组件是否挂载到body元素上",
     },
     placeholder: {
       type: String,
       default: "请选择",
-      __description: "未操作时的占位符"
+      __description: "未操作时的占位符",
     },
     name: {
       type: String,
-      default: "cascader"
+      default: "cascader",
     },
     headStyle: {
       type: Object,
       default: () => ({}),
       __description:
-        "控制级联框的行内样式，多用来控制级联框宽度，默认宽度为240px"
-    }
+        "控制级联框的行内样式，多用来控制级联框宽度，默认宽度为240px",
+    },
   },
   data() {
     return {
       currentValue: [],
       currentData: [],
       visible: false,
-      isFocused: false
+      isFocused: false,
     };
   },
   computed: {
@@ -205,7 +205,7 @@ export default {
     },
     rootProp() {
       return {
-        setCurrentValue: this.setCurrentValue
+        setCurrentValue: this.setCurrentValue,
       };
     },
     trigger() {
@@ -230,27 +230,52 @@ export default {
         : this.publicValue;
 
       return labelList.join("，");
-    }
+    },
   },
   watch: {
     value: {
       immediate: true,
       handler(newVal) {
-        this.currentValue = [];
-        newVal.forEach(val => {
-          const item = this.flatData.find(item => item[this.valueProp] === val);
+        this.$nextTick(() => {
+          this.currentValue = [];
 
-          if (item) {
-            this.currentValue.push(item);
-          }
+          if (!this.flatData.length) return;
+          newVal.forEach(val => {
+            const item = this.flatData.find(
+              item => item[this.valueProp] === val
+            );
+
+            if (item) {
+              this.currentValue.push(item);
+            }
+          });
         });
-      }
+      },
+    },
+    flatData: {
+      immediate: true,
+      handler() {
+        this.$nextTick(() => {
+          this.currentValue = [];
+
+          if (!this.value.length) return;
+          this.value.forEach(val => {
+            const item = this.flatData.find(
+              item => item[this.valueProp] === val
+            );
+
+            if (item) {
+              this.currentValue.push(item);
+            }
+          });
+        });
+      },
     },
     data: {
       immediate: true,
       handler(newVal) {
         this.currentData = newVal;
-      }
+      },
     },
     currentValue(newVal) {
       const valueList = this.currentValue.map(item => item[this.valueProp]);
@@ -259,7 +284,7 @@ export default {
       // 对value属性做双向绑定处理
       this.$emit("update:value", valueList);
       this.$emit("on-change", this.labelInValue ? itemList : valueList);
-    }
+    },
   },
   methods: {
     handleQuery(query) {
@@ -329,8 +354,8 @@ export default {
       });
 
       return result;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -343,6 +368,9 @@ export default {
   .ivu-dropdown {
     display: block;
     width: max-content;
+    position: absolute;
+    z-index: 999;
+    width: 100%;
   }
   .enhance-mul-cascader-dropdown {
     width: 100%;
