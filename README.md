@@ -7,7 +7,7 @@ enhance multiple cascader base on iview
 ## usage
 
 ### import
-1. 在Vue组件中使用：
+1. 以ES Module的方式使用：
 ```bash
 # install module
 npm i southhill/enhance-multiple-cascader-iview -S
@@ -18,12 +18,21 @@ npm i southhill/enhance-multiple-cascader-iview -S
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'
 
+// 全局注册组件
 import EnhanceMultipleCascader from 'enhance-multiple-cascader'
 
 Vue.use(iView)
 Vue.use(EnhanceMultipleCascader)
+
+// 在组件内部使用
+import { EnhanceMultipleCascader } from 'enhance-multiple-cascader'
+
+export default {
+    // ...
+    components: { EnhanceMultipleCascader }
+}
 ```
-2. 在浏览器的html页面直接使用：  
+2. 以AMD的方式使用：  
 ```html
 <!-- 依赖引入：使用script标签引入vue.js，iview.js。使用link标签引入iview.css。-->
 <script src="https://cdn.bootcss.com/vue/2.6.10/vue.common.dev.js"></script>
@@ -39,6 +48,7 @@ Vue.use(EnhanceMultipleCascader)
 | **multiple**            | Boolean  | `true`                                                                                      | 默认为多选级联                                                                                                                                             |
 | disabled                | Boolean  | `false`                                                                                     | 是否被禁用                                                                                                                                                 |
 | value                   | Array    | `[]`                                                                                        | 双向绑定使用的值                                                                                                                                           |
+| names                   | Array    | `[]`                                                                                        | 该属性用来校验传入的value的标签是否与data中的数据保持一致，如果不一致，则清空组件的选中内容。                                                              |
 | data                    | Array    | `[]`                                                                                        | 待使用的级联数据                                                                                                                                           |
 | propAlias               | Object   | <code>{ label: 'label', value: 'value', disabled: 'disabled', children: 'children' }</code> | 传递下来的data数据的属性的别名。有可能从服务端获取到的data树的属性名并不能符合当前使用中的属性名，所以做一次映射操作，以避免对服务端数据的处理，方便操作。 |
 | onlyLeaf                | Boolean  | `true`                                                                                      | 仅仅只能选择叶子节点                                                                                                                                       |
