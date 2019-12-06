@@ -239,7 +239,7 @@ export default {
   width: 240px;
   min-height: 36px;
   line-height: 1.5;
-  padding: 4px 10px 4px 5px;
+  padding: 3px 5px;
   font-size: 12px;
   border: 1px solid #dcdee2;
   border-radius: 4px;
@@ -250,7 +250,7 @@ export default {
   cursor: pointer;
   .head-menu-arrow {
     position: absolute;
-    right: 3px;
+    right: 8px;
     top: 50%;
     transform: translateY(-50%);
     &.rotate {
@@ -258,7 +258,8 @@ export default {
     }
   }
   .ivu-tag {
-    margin: 2px 6px 2px 0;
+    margin: 2px 4px 2px 0;
+    padding: 0 5px;
   }
   .rest-tag-amount {
     display: inline-block;
