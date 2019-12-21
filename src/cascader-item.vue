@@ -40,6 +40,10 @@ export default {
       type: Boolean,
       default: true
     },
+    uniqueFieldInLeaf: {
+      type: String,
+      default: ''
+    },
     allowSelectByParentNode: {
       type: Boolean,
       default: false
@@ -97,8 +101,12 @@ export default {
       )
     },
     isLeafNode() {
+      if (this.item[this.uniqueFieldInLeaf] === undefined) {
+        return false
+      }
       return (
-        !this.item[this.childrenProp] || !this.item[this.childrenProp].length
+        !Array.isArray(this.item[this.childrenProp]) ||
+        !this.item[this.childrenProp].length
       )
     },
     flatItem() {

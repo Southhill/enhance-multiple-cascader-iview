@@ -11,6 +11,7 @@
         :only-leaf="onlyLeaf"
         :prop-alias="propAlias"
         :allow-select-by-parent-node="allowSelectByParentNode"
+        :unique-field-in-leaf="uniqueFieldInLeaf"
         @click.native.stop="handleClickItem(item, $event)"
         @mouseenter.native.stop="handleHoverItem(item)"
       />
@@ -25,6 +26,7 @@
       :only-leaf="onlyLeaf"
       :prop-alias="propAlias"
       :allow-select-by-parent-node="allowSelectByParentNode"
+      :unique-field-in-leaf="uniqueFieldInLeaf"
     />
   </span>
 </template>
@@ -60,6 +62,10 @@ export default {
     onlyLeaf: {
       type: Boolean,
       default: true
+    },
+    uniqueFieldInLeaf: {
+      type: String,
+      default: ''
     },
     allowSelectByParentNode: {
       type: Boolean,

@@ -38,6 +38,7 @@
             :only-leaf="onlyLeaf"
             :prop-alias="propAlias"
             :allow-select-by-parent-node="allowSelectByParentNode"
+            :unique-field-in-leaf="uniqueFieldInLeaf"
           ></CascaderPanel>
         </div>
       </Dropdown>
@@ -121,6 +122,11 @@ export default {
       type: Boolean,
       default: true,
       __description: '仅仅只能选择叶子节点'
+    },
+    uniqueFieldInLeaf: {
+      type: String,
+      default: '',
+      __description: '叶子节点独有的字段，用来标识是否为叶子节点'
     },
     allowSelectByParentNode: {
       type: Boolean,
