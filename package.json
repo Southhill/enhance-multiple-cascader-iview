@@ -1,6 +1,6 @@
 {
   "name": "enhance-multiple-cascader",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "enhance multiple cascader base on iview",
   "main": "dist/enhance-multiple-cascader.js",
   "scripts": {
