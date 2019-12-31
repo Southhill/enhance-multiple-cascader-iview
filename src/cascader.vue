@@ -267,7 +267,9 @@ export default {
   },
   watch: {
     flattenItemList(newList) {
-      this.currentValue = newList
+      if (!!this.flatData.length) {
+        this.currentValue = newList
+      }
     },
     data: {
       immediate: true,
