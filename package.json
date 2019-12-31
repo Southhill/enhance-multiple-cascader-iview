@@ -1,12 +1,13 @@
 {
   "name": "enhance-multiple-cascader",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "enhance multiple cascader base on iview",
   "main": "dist/enhance-multiple-cascader.js",
   "scripts": {
     "dev": "webpack-dev-server --open-page dist/index.html --inline --config build/webpack.dev.config.js",
     "build": "webpack --config build/webpack.prod.config.js",
-    "lint": "standard --verbose | snazzy"
+    "lint": "standard --verbose | snazzy",
+    "check": "bash ./scripts/check-version.sh"
   },
   "author": "Cao",
   "license": "MIT",
@@ -18,7 +19,8 @@
   ],
   "husky": {
     "hooks": {
-      "pre-commit": "npm run build && standard --fix && git add ."
+      "pre-commit": "npm run build && standard --fix && git add .",
+      "pre-push": "npm run check"
     }
   },
   "dependencies": {
