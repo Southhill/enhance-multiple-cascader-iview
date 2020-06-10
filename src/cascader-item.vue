@@ -101,7 +101,10 @@ export default {
       )
     },
     isLeafNode() {
-      if (this.item[this.uniqueFieldInLeaf] === undefined) {
+      if (
+        this.uniqueFieldInLeaf &&
+        this.item[this.uniqueFieldInLeaf] === undefined
+      ) {
         return false
       }
       return (

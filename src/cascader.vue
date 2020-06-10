@@ -27,8 +27,14 @@
     />
     <transition name="drop">
       <Dropdown v-show="visible" ref="drop" :transfer="transfer">
-        <div class="enhance-mul-cascader-dropdown">
+        <div
+          :class="[
+            'enhance-mul-cascader-dropdown',
+            { 'no-data-wrapper': noData },
+          ]"
+        >
           <CascaderPanel
+            v-if="currentData.length > 0"
             ref="panel"
             :data="currentData"
             :values="currentValue"
@@ -40,6 +46,7 @@
             :allow-select-by-parent-node="allowSelectByParentNode"
             :unique-field-in-leaf="uniqueFieldInLeaf"
           ></CascaderPanel>
+          <div v-else class="no-data">{{ notFoundText }}</div>
         </div>
       </Dropdown>
     </transition>
@@ -104,6 +111,11 @@ export default {
         ]
       },
       __description: '待使用的级联数据',
+    },
+    notFoundText: {
+      type: String,
+      default: '没有数据可用',
+      __description: '当没有找到数据时，显示的文本内容',
     },
     propAlias: {
       type: Object,
@@ -221,6 +233,9 @@ export default {
       return {
         setCurrentValue: this.setCurrentValue,
       }
+    },
+    noData() {
+      return this.data.length === 0
     },
     trigger() {
       if (this.multiple) {
@@ -382,6 +397,16 @@ export default {
     border-right: 0 none;
     background-color: #fff;
     width: max-content;
+    &.no-data-wrapper {
+      border-right: 1px solid #dcdee2;
+    }
+  }
+  .no-data {
+    text-align: center;
+    height: 50px;
+    line-height: 50px;
+    color: #333;
+    // background: #f8f8f8;
   }
 }
 .drop-enter-active {
