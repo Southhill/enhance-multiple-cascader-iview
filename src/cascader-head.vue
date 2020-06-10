@@ -56,16 +56,16 @@
 </template>
 
 <script>
-import { Input, Icon, Tag } from "iview";
+import { Input, Icon, Tag } from 'iview'
 
 export default {
-  name: "CascaderHead",
+  name: 'CascaderHead',
   components: {
     Input,
     Icon,
     Tag,
   },
-  inject: ["rootProp"],
+  inject: ['rootProp'],
   props: {
     disabled: {
       type: Boolean,
@@ -97,7 +97,7 @@ export default {
     },
     placeholder: {
       type: String,
-      default: "请选择",
+      default: '请选择',
     },
     maxTagCount: {
       type: Number,
@@ -105,17 +105,17 @@ export default {
     },
     maxTagPlaceholder: {
       type: Function,
-      default: v => `+ ${v}...`,
+      default: (v) => `+ ${v}...`,
     },
     propAlias: {
       type: Object,
       default() {
         return {
-          label: "label",
-          value: "value",
-          disabled: "disabled",
-          children: "children",
-        };
+          label: 'label',
+          value: 'value',
+          disabled: 'disabled',
+          children: 'children',
+        }
       },
     },
     headStyle: {
@@ -125,112 +125,112 @@ export default {
   },
   data() {
     return {
-      query: "",
+      query: '',
       inputLength: 20,
       displayTagCount: 0,
-    };
+    }
   },
   computed: {
     childrenProp() {
-      return this.propAlias.children;
+      return this.propAlias.children
     },
     valueProp() {
-      return this.propAlias.value;
+      return this.propAlias.value
     },
     labelProp() {
-      return this.propAlias.label;
+      return this.propAlias.label
     },
     disabledProp() {
-      return this.propAlias.disabled;
+      return this.propAlias.disabled
     },
     selectedSingle() {
       if (this.values.length) {
-        return this.values[0][this.labelProp];
+        return this.values[0][this.labelProp]
       } else {
-        return this.placeholder;
+        return this.placeholder
       }
     },
     inputStyle() {
-      let style = {};
+      let style = {}
 
       if (this.multiple) {
-        style.width = "100%";
+        style.width = '100%'
       } else {
-        style.width = `${this.inputLength}px`;
+        style.width = `${this.inputLength}px`
       }
 
-      return style;
+      return style
     },
   },
   watch: {
     values() {
       if (this.multiple) {
-        this.query = "";
+        this.query = ''
       }
 
       if (this.maxTagCount === -1) {
-        this.displayTagCount = this.values.length;
+        this.displayTagCount = this.values.length
       }
     },
   },
   mounted() {
-    this.displayTagCount = this.values.length;
+    this.displayTagCount = this.values.length
   },
   methods: {
     handleInputFocus() {
-      this.$emit("on-input-focus");
+      this.$emit('on-input-focus')
     },
     handleInputBlur() {
-      if (!this.values.length) this.query = "";
+      if (!this.values.length) this.query = ''
 
-      this.$emit("on-input-blur");
+      this.$emit('on-input-blur')
     },
     resetInputState() {
-      this.inputLength = this.$refs.input.value.length * 12 + 20;
+      this.inputLength = this.$refs.input.value.length * 12 + 20
 
-      this.$emit("on-keydown");
+      this.$emit('on-keydown')
     },
     handleInputDelete(evt) {
-      const targetValue = evt.target.value;
+      const targetValue = evt.target.value
       if (
         this.multiple &&
         this.values.length &&
-        this.query === "" &&
-        targetValue === ""
+        this.query === '' &&
+        targetValue === ''
       ) {
-        this.setCurrentValue(this.values.length - 1);
+        this.setCurrentValue(this.values.length - 1)
       }
     },
     handleQueryChange(evt) {
-      this.query = evt.target.value;
+      this.query = evt.target.value
 
       // TODO: 需要做节流处理
 
-      this.$emit("on-query-change", this.query);
+      this.$emit('on-query-change', this.query)
     },
 
     handleHeadClick(evt) {
       if (this.filterable && evt.target === this.$el) {
-        this.$refs.input.focus();
+        this.$refs.input.focus()
       }
 
-      this.$emit("on-show-dropdown", true);
+      this.$emit('on-show-dropdown', true)
     },
     removeTag(evt, value) {
-      if (this.disabled) return;
+      if (this.disabled) return
 
-      this.rootProp.setCurrentValue([{ [this.valueProp]: value }], false);
+      this.rootProp.setCurrentValue([{ [this.valueProp]: value }], false)
     },
     onClear() {
-      this.query = "";
+      this.query = ''
 
-      this.$emit("on-clear");
+      this.$emit('on-clear')
     },
     displayAllTag() {
-      this.displayTagCount = this.values.length;
+      this.displayTagCount = this.values.length
     },
   },
-};
+}
 </script>
 
 <style lang="less" scoped>

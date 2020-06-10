@@ -41,35 +41,35 @@ export default {
   props: {
     data: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     values: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     disabled: {
       type: Boolean,
-      default: false
+      default: false,
     },
     trigger: {
       type: String,
-      default: 'hover'
+      default: 'hover',
     },
     multiple: {
       type: Boolean,
-      default: true
+      default: true,
     },
     onlyLeaf: {
       type: Boolean,
-      default: true
+      default: true,
     },
     uniqueFieldInLeaf: {
       type: String,
-      default: ''
+      default: '',
     },
     allowSelectByParentNode: {
       type: Boolean,
-      default: false
+      default: false,
     },
     propAlias: {
       type: Object,
@@ -78,14 +78,14 @@ export default {
           label: 'label',
           value: 'value',
           disabled: 'disabled',
-          children: 'children'
+          children: 'children',
         }
-      }
-    }
+      },
+    },
   },
   data() {
     return {
-      subList: []
+      subList: [],
     }
   },
   computed: {
@@ -100,12 +100,12 @@ export default {
     },
     disabledProp() {
       return this.propAlias.disabled
-    }
+    },
   },
   watch: {
     data() {
       this.subList = []
-    }
+    },
   },
   methods: {
     handleClickItem(item) {
@@ -126,11 +126,13 @@ export default {
     triggerItem(item) {
       if (item[this.disabledProp] || this.disabled) return
 
-      if (this.isValidChildren(item)) {
+      if (Array.isArray(item[this.childrenProp])) {
         this.subList = item[this.childrenProp]
+      } else {
+        this.subList = []
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

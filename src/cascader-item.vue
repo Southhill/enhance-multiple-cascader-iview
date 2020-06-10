@@ -22,31 +22,31 @@ export default {
   props: {
     item: {
       type: Object,
-      default: () => ({})
+      default: () => ({}),
     },
     values: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     multiple: {
       type: Boolean,
-      default: true
+      default: true,
     },
     disabled: {
       type: Boolean,
-      default: false
+      default: false,
     },
     onlyLeaf: {
       type: Boolean,
-      default: true
+      default: true,
     },
     uniqueFieldInLeaf: {
       type: String,
-      default: ''
+      default: '',
     },
     allowSelectByParentNode: {
       type: Boolean,
-      default: false
+      default: false,
     },
     propAlias: {
       type: Object,
@@ -55,10 +55,10 @@ export default {
           label: 'label',
           value: 'value',
           disabled: 'disabled',
-          children: 'children'
+          children: 'children',
         }
-      }
-    }
+      },
+    },
   },
   computed: {
     childrenProp() {
@@ -96,7 +96,7 @@ export default {
     isChecked() {
       return (
         this.values.findIndex(
-          item => this.item[this.valueProp] === item[this.valueProp]
+          (item) => this.item[this.valueProp] === item[this.valueProp]
         ) > -1
       )
     },
@@ -123,17 +123,17 @@ export default {
         return false
       }
 
-      const isAllChecked = this.flatItem.every(item => {
+      const isAllChecked = this.flatItem.every((item) => {
         return (
           this.values.findIndex(
-            value => value[this.valueProp] === item[this.valueProp]
+            (value) => value[this.valueProp] === item[this.valueProp]
           ) > -1
         )
       })
-      const isNotAllChecked = this.flatItem.every(item => {
+      const isNotAllChecked = this.flatItem.every((item) => {
         return (
           this.values.findIndex(
-            value => value[this.valueProp] === item[this.valueProp]
+            (value) => value[this.valueProp] === item[this.valueProp]
           ) === -1
         )
       })
@@ -143,7 +143,7 @@ export default {
       }
 
       return true
-    }
+    },
   },
   methods: {
     handleCheckBoxChange(status) {
@@ -163,7 +163,7 @@ export default {
       const result = [ite]
 
       if (Array.isArray(iteChildren) && iteChildren.length) {
-        iteChildren.forEach(it => {
+        iteChildren.forEach((it) => {
           const subResult = this.getOffspringItems(it)
 
           result.push(...subResult)
@@ -171,8 +171,8 @@ export default {
       }
 
       return result
-    }
-  }
+    },
+  },
 }
 </script>
 

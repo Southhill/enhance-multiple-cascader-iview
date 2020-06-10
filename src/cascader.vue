@@ -48,7 +48,7 @@
 </template>
 
 <script>
-const isObject = obj =>
+const isObject = (obj) =>
   Object.prototype.toString.call(obj).slice(8, -1) === 'Object'
 
 import { directive as clickOutside } from 'v-click-outside-x'
@@ -63,26 +63,26 @@ export default {
   components: {
     Dropdown,
     CascaderHead,
-    CascaderPanel
+    CascaderPanel,
   },
   directives: { clickOutside },
   provide() {
     return {
-      rootProp: this.rootProp
+      rootProp: this.rootProp,
     }
   },
   props: {
     disabled: {
       type: Boolean,
       default: false,
-      __description: '是否被禁用'
+      __description: '是否被禁用',
     },
     value: {
       type: Array,
       default() {
         return []
       },
-      __description: '双向绑定使用的值'
+      __description: '双向绑定使用的值',
     },
     names: {
       type: Array,
@@ -90,7 +90,7 @@ export default {
         return []
       },
       __description:
-        '该属性用来校验传入的value的标签是否与data中的数据保持一致，如果不一致，则清空组件的选中内容。'
+        '该属性用来校验传入的value的标签是否与data中的数据保持一致，如果不一致，则清空组件的选中内容。',
     },
     data: {
       type: Array,
@@ -99,11 +99,11 @@ export default {
           {
             label: '',
             value: '-1',
-            children: []
-          }
+            children: [],
+          },
         ]
       },
-      __description: '待使用的级联数据'
+      __description: '待使用的级联数据',
     },
     propAlias: {
       type: Object,
@@ -112,26 +112,26 @@ export default {
           label: 'label',
           value: 'value',
           disabled: 'disabled',
-          children: 'children'
+          children: 'children',
         }
       },
       __description:
-        '传递下来的data数据的属性的别名。有可能从服务端获取到的data树的属性名并不能符合当前使用中的属性名，所以做一次映射操作，以避免对服务端数据的处理，方便操作。'
+        '传递下来的data数据的属性的别名。有可能从服务端获取到的data树的属性名并不能符合当前使用中的属性名，所以做一次映射操作，以避免对服务端数据的处理，方便操作。',
     },
     onlyLeaf: {
       type: Boolean,
       default: true,
-      __description: '仅仅只能选择叶子节点'
+      __description: '仅仅只能选择叶子节点',
     },
     uniqueFieldInLeaf: {
       type: String,
       default: '',
-      __description: '叶子节点独有的字段，用来标识是否为叶子节点'
+      __description: '叶子节点独有的字段，用来标识是否为叶子节点',
     },
     allowSelectByParentNode: {
       type: Boolean,
       default: false,
-      __description: '允许通过父节点来选择相应的子节点'
+      __description: '允许通过父节点来选择相应的子节点',
     },
     maxTagCount: {
       type: Number,
@@ -139,37 +139,37 @@ export default {
       validator(value) {
         return Number.isInteger(value) && value >= -1
       },
-      __description: '当选中多个项目时，是否对显示在输入框中的条目精简显示'
+      __description: '当选中多个项目时，是否对显示在输入框中的条目精简显示',
     },
     maxTagPlaceholder: {
       type: Function,
-      default: v => `+ ${v}...`
+      default: (v) => `+ ${v}...`,
     },
     filterable: {
       type: Boolean,
       default: false,
-      __description: '是否通过输入过滤级联数据'
+      __description: '是否通过输入过滤级联数据',
     },
     clearable: {
       type: Boolean,
       default: false,
-      __description: '是否可以通过清空输入框的方式删除全部选中的条目'
+      __description: '是否可以通过清空输入框的方式删除全部选中的条目',
     },
     allowDeleteByCloseIcon: {
       type: Boolean,
       default: true,
-      __description: '允许通过Tag的关闭按钮来删除相应选中的条目'
+      __description: '允许通过Tag的关闭按钮来删除相应选中的条目',
     },
     labelInValue: {
       type: Boolean,
       default: false,
       __description:
-        '触发on-change事件时，返回的参数是否要被包装为传入的对象形式'
+        '触发on-change事件时，返回的参数是否要被包装为传入的对象形式',
     },
     multiple: {
       type: Boolean,
       default: true,
-      __description: '默认为多选级联'
+      __description: '默认为多选级联',
     },
     transfer: {
       type: Boolean,
@@ -178,30 +178,30 @@ export default {
           ? false
           : this.$IVIEW.transfer
       },
-      __description: '下拉组件是否挂载到body元素上'
+      __description: '下拉组件是否挂载到body元素上',
     },
     placeholder: {
       type: String,
       default: '请选择',
-      __description: '未操作时的占位符'
+      __description: '未操作时的占位符',
     },
     name: {
       type: String,
-      default: 'cascader'
+      default: 'cascader',
     },
     headStyle: {
       type: Object,
       default: () => ({}),
       __description:
-        '控制级联框的行内样式，多用来控制级联框宽度，默认宽度为240px'
-    }
+        '控制级联框的行内样式，多用来控制级联框宽度，默认宽度为240px',
+    },
   },
   data() {
     return {
       currentValue: [],
       currentData: [],
       visible: false,
-      isFocused: false
+      isFocused: false,
     }
   },
   computed: {
@@ -219,7 +219,7 @@ export default {
     },
     rootProp() {
       return {
-        setCurrentValue: this.setCurrentValue
+        setCurrentValue: this.setCurrentValue,
       }
     },
     trigger() {
@@ -234,13 +234,13 @@ export default {
       return this.flattenData()
     },
     publicValue() {
-      return this.currentValue.map(item => item[this.labelProp])
+      return this.currentValue.map((item) => item[this.labelProp])
     },
     displayValue() {
-      const isLabelInValue = this.value.every(item => isObject(item))
+      const isLabelInValue = this.value.every((item) => isObject(item))
 
       const labelList = isLabelInValue
-        ? this.value.map(item => item[this.labelProp])
+        ? this.value.map((item) => item[this.labelProp])
         : this.publicValue
 
       return labelList.join('，')
@@ -250,8 +250,9 @@ export default {
     },
     flattenItemList() {
       const list = []
+
       this.value.forEach((val, idx) => {
-        const item = this.flatData.find(item => item[this.valueProp] === val)
+        const item = this.flatData.find((item) => item[this.valueProp] === val)
 
         if (
           item &&
@@ -263,7 +264,7 @@ export default {
       })
 
       return list
-    }
+    },
   },
   watch: {
     flattenItemList(newList) {
@@ -275,10 +276,10 @@ export default {
       immediate: true,
       handler(newVal) {
         this.currentData = newVal
-      }
+      },
     },
     currentValue(newItemList) {
-      const newValueList = newItemList.map(item => item[this.valueProp])
+      const newValueList = newItemList.map((item) => item[this.valueProp])
 
       // 如果是相同的值，则不触发事件
       if (this.value.join('') === newValueList.join('')) return
@@ -286,7 +287,7 @@ export default {
       // 对value属性做双向绑定处理
       this.$emit('update:value', newValueList)
       this.$emit('on-change', this.labelInValue ? newItemList : newValueList)
-    }
+    },
   },
   methods: {
     handleQuery(query) {
@@ -308,9 +309,9 @@ export default {
     // list: 待处理的数组
     // action: true:新增；false：删除
     setCurrentValue(list, action) {
-      list.forEach(item => {
+      list.forEach((item) => {
         const idx = this.currentValue.findIndex(
-          ite => ite[this.valueProp] === item[this.valueProp]
+          (ite) => ite[this.valueProp] === item[this.valueProp]
         )
         if (action && idx === -1) {
           this.currentValue.push(item)
@@ -324,7 +325,7 @@ export default {
     queryData(query, list) {
       const result = []
       const data = Array.isArray(list) ? list : this.data
-      data.forEach(item => {
+      data.forEach((item) => {
         if (item[this.labelProp].includes(query)) {
           result.push(item)
         } else if (
@@ -342,7 +343,7 @@ export default {
       const data = Array.isArray(list) ? list : this.data
       const result = []
 
-      data.forEach(item => {
+      data.forEach((item) => {
         result.push(item)
 
         if (
@@ -356,8 +357,8 @@ export default {
       })
 
       return result
-    }
-  }
+    },
+  },
 }
 </script>
 
