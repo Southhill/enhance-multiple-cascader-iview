@@ -103,11 +103,11 @@ export default {
       type: Array,
       default() {
         return [
-          {
-            label: '',
-            value: '-1',
-            children: [],
-          },
+          // {
+          //   label: '',
+          //   value: '-1',
+          //   children: [],
+          // },
         ]
       },
       __description: '待使用的级联数据',
