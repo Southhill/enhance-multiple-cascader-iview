@@ -5,7 +5,7 @@
   "main": "dist/enhance-multiple-cascader.js",
   "scripts": {
     "dev": "webpack-dev-server --open-page dist/index.html --inline --config build/webpack.dev.config.js",
-    "build": "webpack --config build/webpack.prod.config.js",
+    "build": "webpack --config build/webpack.prod.config.js && node scripts/generate-prop-explain.js",
     "lint": "standard --verbose | snazzy",
     "check": "bash ./scripts/check-version.sh"
   },

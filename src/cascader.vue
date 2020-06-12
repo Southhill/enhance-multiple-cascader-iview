@@ -15,7 +15,7 @@
       :placeholder="placeholder"
       :max-tag-count="maxTagCount"
       :max-tag-placeholder="maxTagPlaceholder"
-      :prop-alias="propAlias"
+      :prop-alias="localPropAlias"
       :head-style="headStyle"
       :allow-delete-by-close-icon="allowDeleteByCloseIcon"
       @click.native.stop="() => switchDropdown(true)"
@@ -42,7 +42,7 @@
             :trigger="trigger"
             :multiple="multiple"
             :only-leaf="onlyLeaf"
-            :prop-alias="propAlias"
+            :prop-alias="localPropAlias"
             :allow-select-by-parent-node="allowSelectByParentNode"
             :unique-field-in-leaf="uniqueFieldInLeaf"
           ></CascaderPanel>
@@ -55,14 +55,20 @@
 </template>
 
 <script>
-const isObject = (obj) =>
-  Object.prototype.toString.call(obj).slice(8, -1) === 'Object'
-
-import { directive as clickOutside } from 'v-click-outside-x'
 import { Dropdown } from 'iview'
+import { directive as clickOutside } from 'v-click-outside-x'
 
 import CascaderHead from './cascader-head.vue'
 import CascaderPanel from './cascader-panel.vue'
+
+const isObject = (obj) =>
+  Object.prototype.toString.call(obj).slice(8, -1) === 'Object'
+const defaultPropAlias = {
+  label: 'label',
+  value: 'value',
+  disabled: 'disabled',
+  children: 'children',
+}
 
 export default {
   name: 'EnhanceCascader',
@@ -119,14 +125,6 @@ export default {
     },
     propAlias: {
       type: Object,
-      default() {
-        return {
-          label: 'label',
-          value: 'value',
-          disabled: 'disabled',
-          children: 'children',
-        }
-      },
       __description:
         '传递下来的data数据的属性的别名。有可能从服务端获取到的data树的属性名并不能符合当前使用中的属性名，所以做一次映射操作，以避免对服务端数据的处理，方便操作。',
     },
@@ -217,17 +215,22 @@ export default {
     }
   },
   computed: {
+    localPropAlias() {
+      return isObject(this.propAlias)
+        ? Object.assign({}, defaultPropAlias, this.propAlias)
+        : defaultPropAlias
+    },
     labelProp() {
-      return this.propAlias.label
+      return this.localPropAlias.label
     },
     valueProp() {
-      return this.propAlias.value
+      return this.localPropAlias.value
     },
     disabledProp() {
-      return this.propAlias.disabled
+      return this.localPropAlias.disabled
     },
     childrenProp() {
-      return this.propAlias.children
+      return this.localPropAlias.children
     },
     rootProp() {
       return {
@@ -283,7 +286,7 @@ export default {
   },
   watch: {
     flattenItemList(newList) {
-      if (!!this.flatData.length) {
+      if (this.flatData.length) {
         this.currentValue = newList
       }
     },
