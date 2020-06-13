@@ -1,15 +1,16 @@
-/* eslint-disable */
 const fs = require('fs')
 
 try {
   const raw = fs.readFileSync('src/cascader.vue', 'utf8')
   const propContext = raw.match(/props:\s({[\W\w]+}),\r?\n\s+data\(\)/)[1]
+
   const propObj = eval(`(${propContext})`)
-  const result = ['|prop|type|default|explain|', '|--|--|--|--|']
-  const specialKeys = ['transfer']
+  const result = ['|prop|type|default|explain|', '|:--|:--|:--|:--|']
+  const specialKeys = ['transfer', 'maxTagPlaceholder']
   const defaultValue4SpecialKeysMap = {
     transfer:
-      "`!this.$IVIEW || this.$IVIEW.transfer === '' ? false : this.$IVIEW.transfer`",
+      "<pre>`!this.$IVIEW || this.$IVIEW.transfer === '' ? false : this.$IVIEW.transfer`</pre>",
+    maxTagPlaceholder: '<pre>(v) => \\`+ ${v}...\\`</pre>'
   }
 
   Object.keys(propObj).forEach((key) => {

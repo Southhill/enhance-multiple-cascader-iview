@@ -154,6 +154,7 @@ export default {
     maxTagPlaceholder: {
       type: Function,
       default: (v) => `+ ${v}...`,
+      __description: '当maxTagCount值设置后，选择超过指定数目的项后，级联器的输入值会精简显示为该方法返回的内容'
     },
     filterable: {
       type: Boolean,
@@ -198,6 +199,7 @@ export default {
     name: {
       type: String,
       default: 'cascader',
+      __description: '该值用在级联器的输入框中的name属性上'
     },
     headStyle: {
       type: Object,

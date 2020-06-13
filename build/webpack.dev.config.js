@@ -3,6 +3,7 @@ const merge = require("webpack-merge");
 const wpBaseConfig = require("./webpack.base.config");
 
 module.exports = merge(wpBaseConfig, {
+  mode: "development",
   devtool: "#source-map",
   devServer: {
     publicPath: "/dist/",

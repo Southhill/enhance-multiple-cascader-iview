@@ -4,9 +4,8 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 const wpBaseConfig = require("./webpack.base.config");
 
-process.env.NODE_ENV = "production";
-
 module.exports = merge(wpBaseConfig, {
+  mode: 'production',
   output: {
     path: path.resolve(__dirname, "../dist"),
     filename: "enhance-multiple-cascader.js",
@@ -21,5 +20,13 @@ module.exports = merge(wpBaseConfig, {
       amd: "vue"
     }
   },
-  plugins: [new UglifyJsPlugin()]
+  plugins: [new UglifyJsPlugin()],
+  performance: {
+    hints: 'warning',
+    maxEntrypointSize: 5000000,
+    maxAssetSize: 3000000, // 3Mb
+    assetFilter: function (assetFileName) {
+      return assetFileName.endsWith('.js')
+    }
+  }
 });

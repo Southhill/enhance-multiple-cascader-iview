@@ -1,0 +1,6 @@
+# file
+.eslintrc.js
+
+# folder
+build/
+scripts/

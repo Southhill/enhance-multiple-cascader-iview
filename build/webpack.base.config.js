@@ -1,8 +1,6 @@
 const path = require('path');
+const { VueLoaderPlugin } = require("vue-loader");
 
-function resolve (dir){
-  return path.join(__dirname, dir);
-}
 
 module.exports = {
   entry  : {
@@ -14,41 +12,35 @@ module.exports = {
   module : {
     rules: [
       {
-        test   : /\.vue$/,
-        loader : 'vue-loader',
-        options: {
-          less: 'vue-style-loader!css-loader!less-loader',
-        }
+        test: /\.vue$/,
+        use: [
+          {
+            loader: 'vue-loader',
+            options: {
+              loaders: {
+                less: 'vue-style-loader!css-loader!less-loader',
+              }
+            }
+          }
+        ]
       },
       {
         test   : /\.js$/,
         exclude: /node_modules/,
-        loader : 'babel-loader'
+        use : ['babel-loader']
       },
       {
         test  : /\.less$/,
-        loader: [ 'style-loader', 'css-loader', 'less-loader' ]
+        use: [ 'style-loader', 'css-loader', 'less-loader' ]
       },
       {
         test  : /\.css$/,
-        loader: [ 'style-loader', 'css-loader' ]
-      },
-      {
-        test  : /\.(png|jpg|jpeg|gif|svg)$/,
-        loader: 'url-loader?limit=8196',
-      },
-      {
-        test  : /\.(woff|eot|ttf)$/,
-        loader: 'url-loader'
+        use: [ 'style-loader', 'css-loader' ]
       },
     ]
   },
   resolve: {
-    extensions: [ '.js', '.vue' ],
-    alias     : {
-      'vue$': 'vue/dist/vue.esm.js',
-      '@'   : resolve('../src'),
-      'test': resolve('../test'),
-    }
+    extensions: [ '.js', '.vue' ]
   },
+  plugins: [new VueLoaderPlugin()]
 }
